@@ -73,3 +73,6 @@ resource "kubernetes_service" "hello-world" {
   }
 }
 
+output "lb_ip" {
+  value = kubernetes_service.hello-world.load_balancer_ingress[0].ip
+}
