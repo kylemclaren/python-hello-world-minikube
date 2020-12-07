@@ -45,3 +45,11 @@ fi
 echo "Starting minikube..."
 minikube start --kubernetes-version="$VERSION"
 
+# ensure context
+
+minikube update-context
+
+# plug in to minikube docker daemon
+
+eval "$(minikube -p minikube docker-env)"
+
