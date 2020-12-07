@@ -76,6 +76,9 @@ terraform -chdir="../deploy" init
 echo "Terraform apply..."
 terraform -chdir="../deploy" apply -auto-approve
 
+# echo "Would you like to make this app publicly accessible from yuor local machine?"
+
+# open app in browser
 
 echo "Opening 'Hello, World!' in default browser..."
 open http://localhost:8080
