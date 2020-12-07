@@ -164,11 +164,70 @@ Opening 'Hello, World!' in default browser...
 
 ```sh
 $ kubectl get pods -n apps
+```
+
+```txt
+NAME                           READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+hello-world-6664cb549c-k7tgl   1/1     Running   0          13m   172.17.0.4   minikube   <none>           <none>
+hello-world-6664cb549c-nr8vt   1/1     Running   0          13m   172.17.0.3   minikube   <none>           <none>
 
 ```
 
 ```sh
-$ kubectl describe pods <pod_name>
+$ kubectl describe pods hello-world-6664cb549c-k7tgl
+```
+
+```txt
+Name:         hello-world-6664cb549c-k7tgl
+Namespace:    apps
+Priority:     0
+Node:         minikube/192.168.49.2
+Start Time:   Tue, 08 Dec 2020 00:25:50 +0200
+Labels:       App=helloWorldApp
+              pod-template-hash=6664cb549c
+Annotations:  <none>
+Status:       Running
+IP:           172.17.0.4
+IPs:
+  IP:           172.17.0.4
+Controlled By:  ReplicaSet/hello-world-6664cb549c
+Containers:
+  hello-world-app:
+    Container ID:   docker://6692ce37631564669ebdee6f8bb93b8608a156749223c9e755c2d90c7afc1f88
+    Image:          hello-world:1.0.0
+    Image ID:       docker://sha256:501415638a9b51f6a57152064b07d89fd35fb4213a4e676b9c0ee26b04614389
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Tue, 08 Dec 2020 00:25:51 +0200
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  512Mi
+    Requests:
+      cpu:        250m
+      memory:     50Mi
+    Environment:  <none>
+    Mounts:       <none>
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:            <none>
+QoS Class:          Burstable
+Node-Selectors:     <none>
+Tolerations:        node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                    node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  14m   default-scheduler  Successfully assigned apps/hello-world-6664cb549c-k7tgl to minikube
+  Normal  Pulled     14m   kubelet            Container image "hello-world:1.0.0" already present on machine
+  Normal  Created    14m   kubelet            Created container hello-world-app
+  Normal  Started    14m   kubelet            Started container hello-world-app
 
 ```
 
