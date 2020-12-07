@@ -40,3 +40,8 @@ else
     echo "Terraform is already installed"
 fi
 
+# run new minkube cluster
+
+echo "Starting minikube..."
+minikube start --kubernetes-version="$VERSION"
+
