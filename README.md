@@ -43,7 +43,119 @@ $ sh ./bootstrap.sh
 
 <details>
 <summary>Example output</summary>
-<pre>This is a dropdown with text!</pre>
+<pre>
+➜  scripts git:(master) ✗ sh ./bootstrap.sh
+Attempting to install minikube and assorted tools to /usr/local/bin
+kubetcl is already installed
+minikube is already installed
+Attempting to install Terraform to /usr/local/bin
+Terraform is already installed
+Starting minikube...
+😄  minikube v1.15.1 on Darwin 10.15.7
+✨  Automatically selected the docker driver. Other choices: hyperkit, virtualbox
+👍  Starting control plane node minikube in cluster minikube
+🔥  Creating docker container (CPUs=2, Memory=1987MB) ...
+❗  This container is having trouble accessing https://k8s.gcr.io
+💡  To pull new external images, you may need to configure a proxy: https://minikube.sigs.k8s.io/docs/reference/networking/proxy/
+🐳  Preparing Kubernetes v1.19.4 on Docker 19.03.13 ...
+🔎  Verifying Kubernetes components...
+🌟  Enabled addons: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+🙄  No changes required for the "minikube" context
+💗  Current context is "minikube"
+Building Docker image...
+Sending build context to Docker daemon  5.632kB
+Step 1/7 : FROM python:3.6
+3.6: Pulling from library/python
+756975cb9c7e: Pull complete
+d77915b4e630: Pull complete
+5f37a0a41b6b: Pull complete
+96b2c1e36db5: Pull complete
+c495e8de12d2: Pull complete
+a79e1025c0fe: Pull complete
+f1f619b13c7c: Pull complete
+1f74591d7ee0: Pull complete
+5ce9e9a2fdaa: Pull complete
+Digest: sha256:eea8761e62da5990ce1fae2d278de877415b15ab5c9f54e0efdd012ff478ed93
+Status: Downloaded newer image for python:3.6
+ ---> bda27a013ab2
+Step 2/7 : LABEL maintainer="kylemclaren@protonmail.com"
+ ---> Running in 9a0f24971e4b
+Removing intermediate container 9a0f24971e4b
+ ---> 1f045bdfe198
+Step 3/7 : COPY . /app
+ ---> ee068222e09a
+Step 4/7 : WORKDIR /app
+ ---> Running in 08c09c1e8eaa
+Removing intermediate container 08c09c1e8eaa
+ ---> 92724a274a79
+Step 5/7 : RUN pip install -r requirements.txt
+ ---> Running in 3eb53b4575a5
+Collecting flask
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting click>=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting MarkupSafe>=0.23
+  Downloading MarkupSafe-1.1.1-cp36-cp36m-manylinux1_x86_64.whl (27 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Installing collected packages: MarkupSafe, Werkzeug, Jinja2, itsdangerous, click, flask
+Successfully installed Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 flask-1.1.2 itsdangerous-1.1.0
+Removing intermediate container 3eb53b4575a5
+ ---> af4a58845f46
+Step 6/7 : ENTRYPOINT ["python"]
+ ---> Running in 9e8f98ce35b6
+Removing intermediate container 9e8f98ce35b6
+ ---> d293ff78db37
+Step 7/7 : CMD ["app.py"]
+ ---> Running in e5e68afd9b87
+Removing intermediate container e5e68afd9b87
+ ---> 782825373293
+Successfully built 782825373293
+Successfully tagged hello-world:1.0.0
+Starting minikube loadbalancer...
+Loadbalancer started...
+
+Initializing the backend...
+
+Initializing provider plugins...
+
+- Reusing previous version of hashicorp/kubernetes from the dependency lock file
+- Installing hashicorp/kubernetes v1.13.3...
+- Installed hashicorp/kubernetes v1.13.3 (signed by HashiCorp)
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+Terraform apply...
+kubernetes_namespace.k8s-apps-namespace: Refreshing state... [id=apps]
+kubernetes_deployment.hello-world: Refreshing state... [id=apps/hello-world]
+kubernetes_service.hello-world: Refreshing state... [id=apps/hello-world]
+kubernetes_namespace.k8s-apps-namespace: Creating...
+kubernetes_namespace.k8s-apps-namespace: Creation complete after 0s [id=apps]
+kubernetes_deployment.hello-world: Creating...
+kubernetes_deployment.hello-world: Creation complete after 4s [id=apps/hello-world]
+kubernetes_service.hello-world: Creating...
+kubernetes_service.hello-world: Creation complete after 1s [id=apps/hello-world]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+lb_ip = "127.0.0.1"
+Opening 'Hello, World!' in default browser...
+
+</pre>
 </details>
 
 ---
@@ -75,5 +187,6 @@ $ sh ./cleanup.sh
 - Set up a local image registry or enable credential input for remote registry to push images to
 - Use `xip.io`
 - Secure app with self-signed certs
+- ngrok
 - Enable Istio on cluster to manage traffic/load balancing
 - Setup CI/CD and deploy app using ArgoCD
