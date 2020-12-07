@@ -71,3 +71,8 @@ echo "Loadbalancer started..."
 
 terraform -chdir="../deploy" init
 
+# apply terraform
+
+echo "Terraform apply..."
+terraform -chdir="../deploy" apply -auto-approve
+
