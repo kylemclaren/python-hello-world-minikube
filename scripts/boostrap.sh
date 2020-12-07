@@ -58,3 +58,12 @@ eval "$(minikube -p minikube docker-env)"
 echo "Building Docker image..."
 docker build -t hello-world:1.0.0 ../src
 
+echo "Starting minikube loadbalancer..."
+
+(
+    # sudo -S minikube tunnel -c
+    minikube tunnel
+) >/dev/null &
+
+echo "Loadbalancer started..."
+
