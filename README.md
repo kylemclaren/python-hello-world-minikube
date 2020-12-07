@@ -6,7 +6,7 @@ Bootstrap a Python Hello World application on Minikube using Terraform
 
 ## Prerequisites ✅
 
-All installation scripts assume macOS and a working, running Docker for Desktop installation
+All installation scripts assume macOS and a working, running Docker for Desktop installation. The script will install `minikube`, `kubectl` and `terraform` on your system if not present. If you already have those tools installed, please upgrade them to their latest versions before continuing.
 
 ---
 
@@ -25,7 +25,7 @@ All installation scripts assume macOS and a working, running Docker for Desktop 
 
 ## Terraforming 🌋
 
-Unfortunately, we can;t provision the Minikube cluster itself using Terraform, however, we will deploy the `Hello, World!` application as a Kubernetes deployment. The `main.tf` file sets up the following infrastructure:
+Unfortunately, we can't provision the Minikube cluster itself using Terraform, however, we will deploy the `Hello, World!` application as a Kubernetes deployment using Terraform. The `main.tf` file sets up the following infrastructure:
 
 - `apps` namespace
 - `hello-world` deployment with 2 replicas, running the `hello-world:1.0.0` image that is built within the Minikube docker context
@@ -35,8 +35,10 @@ Unfortunately, we can;t provision the Minikube cluster itself using Terraform, h
 
 ## Run it 🚀
 
+> Ensure you are in the `/scripts` directory (`cd scripts`)
+
 ```sh
-$ sh scripts/bootstrap.sh
+$ sh ./bootstrap.sh
 ```
 
 <details>
@@ -54,12 +56,16 @@ $ sh scripts/bootstrap.sh
 
 Zombie tunnel process - the bootstrap scrip spawns a sub-process to run the Minikube tunnel (for loadbalancing). This command continues to run after the bootstrap script has exited. Will become a zombie proc after minikube cluster is deleted, so this can/should be improved. To manually kill the command, run `ps aux | grep "minikube tunnel"`, note the proc ID, and then `kill -9 <PROC>`
 
+Running the `cleanup.sh` script solves this issue by killing the proc.
+
 ---
 
 ## Cleaning up 🧹
 
+> Ensure you are in the `/scripts` directory (`cd scripts`)
+
 ```sh
-$ sh scripts/cleanup.sh
+$ sh ./cleanup.sh
 ```
 
 ---
@@ -67,5 +73,7 @@ $ sh scripts/cleanup.sh
 ## Going Further 🦾
 
 - Set up a local image registry or enable credential input for remote registry to push images to
+- Use `xip.io`
+- Secure app with self-signed certs
 - Enable Istio on cluster to manage traffic/load balancing
 - Setup CI/CD and deploy app using ArgoCD
