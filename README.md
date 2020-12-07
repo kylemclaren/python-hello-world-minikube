@@ -1,6 +1,6 @@
 # Python `Hello, World!` on Minikube 🐍
 
-Bootstrap a Python Hello World application on Minikube using Terraform
+Bootstrap a Python Hello, World! application on Minikube using Terraform
 
 ---
 
@@ -160,13 +160,41 @@ Opening 'Hello, World!' in default browser...
 
 ---
 
+## Inspect things 🔎
+
+```sh
+$ kubectl get pods -n apps
+
+```
+
+```sh
+$ kubectl describe pods <pod_name>
+
+```
+
+---
+
 ## Troubleshooting 😫
+
+If `bootstrap.sh` fails with a permission error of some kind, please run it again with sudo:
+
+> ❗️ Always inspect scripts before running them in your terminal, especially when running with sudo!!
+
+```sh
+$ sudo !!
+```
+
+> OR
+
+```sh
+$ sudo sh ./boostrap.sh
+```
 
 ---
 
 ## Known issues 🐞
 
-Zombie tunnel process - the bootstrap scrip spawns a sub-process to run the Minikube tunnel (for loadbalancing). This command continues to run after the bootstrap script has exited. Will become a zombie proc after minikube cluster is deleted, so this can/should be improved. To manually kill the command, run `ps aux | grep "minikube tunnel"`, note the proc ID, and then `kill -9 <PROC>`
+Zombie tunnel process - the bootstrap script spawns a sub-process to run the Minikube tunnel (for loadbalancing). This command continues to run after the bootstrap script has exited. Will become a zombie proc after minikube cluster is deleted, so this can/should be improved. To manually kill the command, run `ps aux | grep "minikube tunnel"`, note the proc ID, and then `kill -9 <PROC>`
 
 Running the `cleanup.sh` script solves this issue by killing the proc.
 
