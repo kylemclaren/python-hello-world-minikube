@@ -67,3 +67,7 @@ echo "Starting minikube loadbalancer..."
 
 echo "Loadbalancer started..."
 
+# init terraform
+
+terraform -chdir="../deploy" init
+
