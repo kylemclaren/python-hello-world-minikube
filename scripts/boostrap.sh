@@ -53,3 +53,8 @@ minikube update-context
 
 eval "$(minikube -p minikube docker-env)"
 
+# build docker container
+
+echo "Building Docker image..."
+docker build -t hello-world:1.0.0 ../src
+
