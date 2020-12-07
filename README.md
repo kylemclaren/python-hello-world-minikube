@@ -246,7 +246,7 @@ $ sudo !!
 > OR
 
 ```sh
-$ sudo sh ./boostrap.sh
+$ sudo sh ./bootstrap.sh
 ```
 
 ---
