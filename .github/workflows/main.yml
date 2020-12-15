@@ -1,4 +1,4 @@
-name: Apply
+- name: Apply
 
 on:
   push:
@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
 
       - name: terraform apply
         uses: dflook/terraform-apply@v1
