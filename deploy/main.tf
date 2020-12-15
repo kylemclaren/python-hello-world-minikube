@@ -1,5 +1,13 @@
+variable "host" { }
+variable "cluster_ca_certificate" { }
+variable "token" { }
+
 provider "kubernetes" {
-  config_context_cluster = "minikube"
+  host                   = var.host
+  cluster_ca_certificate = var.cluster_ca_certificate
+  token                  = var.token
+  load_config_file       = false
+  version                = "~> 1.9"
 }
 
 resource "kubernetes_namespace" "k8s-apps-namespace" {
