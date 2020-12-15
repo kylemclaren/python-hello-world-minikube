@@ -11,13 +11,12 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
   load_config_file       = false
-  version                = "~> 1.9"
 }
 
 module "my-cluster" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "equalexperts"
-  cluster_version = "1.17"
+  cluster_name    = "equalexperts2"
+  cluster_version = "1.18"
   subnets         = ["subnet-08cdb1a077b271d8f", "subnet-01186901b6951ffcc", "subnet-02b5a96d6cc72a95c"]
   vpc_id          = "vpc-01984424962665a15"
 
