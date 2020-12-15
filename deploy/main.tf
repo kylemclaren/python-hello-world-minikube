@@ -20,6 +20,7 @@ module "my-cluster" {
   cluster_version = "1.17"
   subnets         = ["subnet-091de337d890e9b6c", "subnet-0c204e7b8f1e0126b", "subnet-060f8d924d500b996"]
   vpc_id          = "vpc-0589b31f361b95c0b"
+  region          = "eu-west-1"
 
   worker_groups = [
     {
