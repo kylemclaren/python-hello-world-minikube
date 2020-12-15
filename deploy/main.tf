@@ -18,8 +18,8 @@ module "my-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "equalexperts"
   cluster_version = "1.17"
-  subnets         = ["subnet-091de337d890e9b6c", "subnet-0c204e7b8f1e0126b", "subnet-060f8d924d500b996"]
-  vpc_id          = "vpc-0589b31f361b95c0b"
+  subnets         = ["subnet-08cdb1a077b271d8f", "subnet-01186901b6951ffcc", "subnet-02b5a96d6cc72a95c"]
+  vpc_id          = "vpc-01984424962665a15"
 
   worker_groups = [
     {
