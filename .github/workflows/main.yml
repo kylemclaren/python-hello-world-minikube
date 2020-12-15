@@ -1,2 +1,21 @@
-- name: terraform-apply
-  uses: dflook/terraform-apply@v1.4.1
+name: Apply
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    name: Apply terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          path: ./deploy
+          auto_approve: true
+          var: host=${{ env.host }},cluster_ca_certificate=${{ env.cluster_ca_certificate }},token=${{ env.token }}
