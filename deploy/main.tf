@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "terra-backend-123"
+    key    = "network/terraform.tfstate"
+    region = "eu-west-1"
+  }
+}
+
 data "aws_eks_cluster" "cluster" {
   name = module.my-cluster.cluster_id
 }
