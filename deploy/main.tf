@@ -30,8 +30,9 @@ module "my-cluster" {
 
   worker_groups = [
     {
-      instance_type = "t2.micro"
-      asg_max_size  = 2
+      name                          = "worker-group-1"
+      instance_type                 = "t2.micro"
+      asg_desired_capacity          = 1
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     }
   ]
