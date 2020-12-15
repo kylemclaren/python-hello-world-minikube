@@ -1,2 +1,2 @@
-- name: HashiCorp - Setup Terraform
-  uses: hashicorp/setup-terraform@v1.2.1
+- name: terraform-apply
+  uses: dflook/terraform-apply@v1.4.1
