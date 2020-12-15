@@ -59,7 +59,7 @@ resource "kubernetes_deployment" "hello-world" {
       }
       spec {
         container {
-          image = "hello-world:1.0.0"
+          image = "kylemclaren/hello-world:1.0.0"
           name  = "hello-world-app"
 
           port {
