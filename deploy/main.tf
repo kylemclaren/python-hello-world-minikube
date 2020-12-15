@@ -15,10 +15,10 @@ provider "kubernetes" {
 
 module "my-cluster" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "equalexperts2"
+  cluster_name    = "equalexperts"
   cluster_version = "1.18"
-  subnets         = ["subnet-08cdb1a077b271d8f", "subnet-01186901b6951ffcc", "subnet-02b5a96d6cc72a95c"]
-  vpc_id          = "vpc-01984424962665a15"
+  subnets         = ["subnet-0e58d4057d811c830", "subnet-0cc57d5a6b6e546b1", "subnet-04ba8e31e6d2788dc"]
+  vpc_id          = "	vpc-05af4d83f47455708"
 
   worker_groups = [
     {
