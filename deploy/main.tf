@@ -25,13 +25,14 @@ module "my-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "equalexperts"
   cluster_version = "1.18"
-  subnets         = ["subnet-0e58d4057d811c830", "subnet-0cc57d5a6b6e546b1", "subnet-04ba8e31e6d2788dc"]
-  vpc_id          = "	vpc-05af4d83f47455708"
+  subnets         = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
 
   worker_groups = [
     {
       instance_type = "t2.micro"
       asg_max_size  = 2
+      additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     }
   ]
 }
