@@ -1,13 +1,32 @@
-variable "host" { default = "https://40258DB952129BC2E79FCFFE57FE9E7F.gr7.eu-west-1.eks.amazonaws.com" }
-variable "cluster_ca_certificate" { default = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJd01USXhOVEUxTURneU1Wb1hEVE13TVRJeE16RTFNRGd5TVZvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTVhhCndQclZqbTRSaVRZZ3ZqTTRQSkpucXpiRFNOYlJoaVZKcjdPdGRiWkpoNGFCNWxMZjFLbzM4dDFrM3NlUkt4WUcKMjFkODJ2RlhSL1c4VEtrUlJ5RmJ0S25DNWRjd0h3bWE3MVZoSmZhbVZSWlhUdEZtMmd3RkQ0dlJtUmFhTlp5TgorcTROcmxyRWZ2ZWJIMjdUM0FaT1BVODFvNUc0VmNsSmhQanhOZ3R4bHVxY1ZuSyswWU5IeXVVbCs3UFg2cjZDCmNLTjFvYzdHb2NaV0tsWmhRV3hwU09mN1VvYndhTy9TS0UwSnFoY0luVkw0WjNBeGJvV2VRN2x3Y281SjZpUUMKem8rRi9wZGdKaGxoTkFNQUViU2FBT0tnVnpwNGEwb2hZWCt0QjdtYldsZUJkZkRzaGhBK0RBN3U1cThIcXVUeApPUi9mWFNnTE9lNVRRZjBEMWhrQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFGL0wyTEt2ZG96SmY5bWVJcDgrbURldldZcngKZE96dVdpdTJ0S0R1N0hJKytNSC96WDdKTGZzUTNEQVJzK0g0cGt1MjY0UjYrWHNHcVpuU3d6WEVPQTI3MEdOawpBajJHS1AwMEtlUGRiNlVGMmkyVm1DNzl4NnJ6YkJxcGlwTjdoSnNZNEE5NlhaYTkrZkIxdHoxaEIzUmdGTHVpCmppanRFQXBaanlvNC9ibGFzeVUxK1dld3FRdUQ3Y2VuREhCempla2h3NUpLYndrendCZ2NONzhONVBjUmxVNXIKVVJSQnNISno3WU9CZmd5UFNac0RGYXk3YzRMOFArci9qUnU0SmxZcEFpamY5U0NPNjgrbEdDOTRSNzlIdEU4WQpwaUErMDR5amNDQUNCNDRpWmhWSDd3S2ROVkxoOHU3QS85WEtSeWRkaFdGS0tqK1FtY3U4UjRPQjF3bz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=" }
-variable "token" { default = "k8s-aws-v1.aHR0cHM6Ly9zdHMuYW1hem9uYXdzLmNvbS8_QWN0aW9uPUdldENhbGxlcklkZW50aXR5JlZlcnNpb249MjAxMS0wNi0xNSZYLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFKQUNPVDU3TlJMSlJMS0pBJTJGMjAyMDEyMTUlMkZ1cy1lYXN0LTElMkZzdHMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIwMTIxNVQxNTIwNDZaJlgtQW16LUV4cGlyZXM9MCZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QlM0J4LWs4cy1hd3MtaWQmWC1BbXotU2lnbmF0dXJlPTExMjg0NGFjZTk5NWI2NjBjZTA3ZDI4Y2Q1YzI2NjgxNDZkMjRjNDcyOGIzNTJhZDA3Mzk0YjlkM2RhZDczMTQ"}
+data "aws_eks_cluster" "cluster" {
+  name = module.my-cluster.cluster_id
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.my-cluster.cluster_id
+}
 
 provider "kubernetes" {
-  host                   = var.host
-  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
-  token                  = var.token
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
   load_config_file       = false
   version                = "~> 1.9"
+}
+
+module "my-cluster" {
+  source          = "terraform-aws-modules/eks/aws"
+  cluster_name    = "equalexperts"
+  cluster_version = "1.17"
+  subnets         = ["subnet-091de337d890e9b6c", "subnet-0c204e7b8f1e0126b", "subnet-060f8d924d500b996"]
+  vpc_id          = "vpc-0589b31f361b95c0b"
+
+  worker_groups = [
+    {
+      instance_type = "t2.micro"
+      asg_max_size  = 2
+    }
+  ]
 }
 
 resource "kubernetes_namespace" "k8s-apps-namespace" {
