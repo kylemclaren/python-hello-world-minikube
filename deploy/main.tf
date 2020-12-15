@@ -4,7 +4,7 @@ variable "token" { default = "k8s-aws-v1.aHR0cHM6Ly9zdHMuYW1hem9uYXdzLmNvbS8_QWN
 
 provider "kubernetes" {
   host                   = var.host
-  cluster_ca_certificate = var.cluster_ca_certificate
+  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
   token                  = var.token
   load_config_file       = false
   version                = "~> 1.9"
