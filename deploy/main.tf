@@ -34,9 +34,6 @@ module "my-cluster" {
       max_capacity     = 1
       min_capacity     = 1
       instance_type    = "t2.micro"
-      k8s_labels = {
-        provisionGroup = "apps"
-      }
     }
   }
 }
@@ -73,7 +70,7 @@ resource "kubernetes_deployment" "hello-world" {
         container {
           image = "kylemclaren/hello-world:1.0.0"
           name  = "hello-world-app"
-          imagePullPolicy = Always
+          image_pull_policy = "Always"
 
           port {
             container_port = 8080
@@ -90,8 +87,8 @@ resource "kubernetes_deployment" "hello-world" {
             }
           }
         }
-        nodeSelector {
-          provisionGroup = "apps"
+        node_selector = {
+          "node.kubernetes.io/instance-type" = "t2.micro"
         }
       }
     }
