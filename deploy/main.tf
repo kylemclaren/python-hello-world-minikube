@@ -28,14 +28,17 @@ module "my-cluster" {
   subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
 
-  worker_groups = [
-    {
-      name                          = "worker-group-1"
-      instance_type                 = "t2.micro"
-      asg_desired_capacity          = 1
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
+  node_groups = {
+    first = {
+      desired_capacity = 1
+      max_capacity     = 1
+      min_capacity     = 1
+      instance_type    = "t2.micro"
+      k8s_labels = {
+        provisionGroup = "apps"
+      }
     }
-  ]
+  }
 }
 
 resource "kubernetes_namespace" "k8s-apps-namespace" {
@@ -70,6 +73,7 @@ resource "kubernetes_deployment" "hello-world" {
         container {
           image = "kylemclaren/hello-world:1.0.0"
           name  = "hello-world-app"
+          imagePullPolicy = Always
 
           port {
             container_port = 8080
@@ -85,6 +89,9 @@ resource "kubernetes_deployment" "hello-world" {
               memory = "50Mi"
             }
           }
+        }
+        nodeSelector {
+          provisionGroup = "apps"
         }
       }
     }
