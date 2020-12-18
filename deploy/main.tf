@@ -93,6 +93,7 @@ resource "kubernetes_deployment" "hello-world" {
       }
     }
   }
+  depends_on = [module.my-cluster]
 }
 
 resource "kubernetes_service" "hello-world" {
