@@ -33,7 +33,7 @@ module "my-cluster" {
       desired_capacity = 1
       max_capacity     = 1
       min_capacity     = 1
-      instance_type    = "t2.micro"
+      instance_type    = "t3.small"
     }
   }
 }
@@ -88,7 +88,7 @@ resource "kubernetes_deployment" "hello-world" {
           }
         }
         node_selector = {
-          "node.kubernetes.io/instance-type" = "t2.micro"
+          "node.kubernetes.io/instance-type" = "t3.small"
         }
       }
     }
